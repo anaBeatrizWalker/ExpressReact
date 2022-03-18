@@ -4,7 +4,7 @@ import { useParams } from 'react-router'
 
 import { ListGroup } from 'react-bootstrap'
 
-export default function Produtos(){
+export default function DadosProduto(){
 
     let {id} = useParams()
     const [produto, setProduto] = useState({})
@@ -21,6 +21,7 @@ export default function Produtos(){
             <h1>Detalhes do produto</h1>
 
             <ListGroup style={{marginTop: '20px'}}>
+                <ListGroup.Item>Código: {produto.id}</ListGroup.Item>
                 <ListGroup.Item>Nome: {produto.nome}</ListGroup.Item>
                 <ListGroup.Item>Preço: {produto.preco}</ListGroup.Item>
                 <ListGroup.Item>Quantidade: {produto.quantidade}</ListGroup.Item>
