@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
 import api_express from '../../config/api_express'
 
 export default function ListaProdutos(){
@@ -10,7 +10,6 @@ export default function ListaProdutos(){
     useEffect(()=>{
         api_express.get('/produtos').then(resp => {
             setProdutos(resp.data.produtos)
-            //console.log((resp.data.produtos))
         })
     }, [])
 
@@ -18,6 +17,8 @@ export default function ListaProdutos(){
         <div style={{marginTop: '20px'}}>
 
             <h1>Lista dos produtos</h1>
+
+            <Link className='btn btn-primary' to="/produtos/novo">Adicionar produto</Link>
 
             {produtos.map(produto => { 
                 return (
