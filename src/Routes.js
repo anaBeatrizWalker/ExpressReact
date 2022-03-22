@@ -1,8 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router'
+
 import ListaProdutos from './components/Produtos/ListaProdutos'
 import DadosProduto from './components/Produtos/DadosProduto'
 import AdicionaProduto from './components/Produtos/AdicionaProduto'
+import DeletarProduto from './components/Produtos/DeletarProduto'
+
 import TiposProdutos from './components/TiposProdutos'
 import Fornecedores from './components/Fornecedores'
 import Enderecos from './components/Enderecos'
@@ -11,10 +14,13 @@ import Funcionarios from './components/Funcionarios'
 export default function Rotas(){
     return (
         <Routes>
+            {/* rotas dos produtos */}
             <Route path='/produtos' element={<ListaProdutos/>}></Route>
             <Route path='/produtos/:id' element={<DadosProduto/>}></Route>
             <Route path='/produtos/novo' element={<AdicionaProduto/>}></Route>
-            <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>            
+            <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>   
+            <Route path='/produtos/:id/deletar' element={<DeletarProduto/>}></Route>
+
             <Route path='/tipos_produtos' element={<TiposProdutos/>}></Route>
             <Route path='/fornecedores' element={<Fornecedores/>}></Route>
             <Route path='/enderecos' element={<Enderecos/>}></Route>

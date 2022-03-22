@@ -27,6 +27,7 @@ export default function ListaProdutos(){
                             <Link to={`/produtos/${produto.id}`}>{produto.nome}</Link>
                             <div className="d-flex justify-content-end">
                                 <Button href={`/produtos/${produto.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
+                                <Button href={`/produtos/${produto.id}/deletar`} variant="danger" className="p-2 bd-highlight">Deletar</Button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>
