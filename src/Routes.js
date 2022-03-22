@@ -43,6 +43,13 @@ export default function Rotas(){
             <Route path='/tipos_produtos/:id/editar' element={<AdicionaTipoProduto/>}></Route>
             <Route path='/tipos_produtos/:id/deletar' element={<DeletarTipoProduto/>}></Route>
 
+            {/* fornecedores */}
+            <Route path='/fornecedores' element={<ListaFornecedores/>}></Route>
+            <Route path='/fornecedores/:id' element={<DadosFornecedor/>}></Route>
+            <Route path='/fornecedores/novo' element={<AdicionaFornecedor/>}></Route>
+            <Route path='/fornecedores/:id/editar' element={<AdicionaFornecedor/>}></Route>
+            <Route path='/fornecedores/:id/deletar' element={<DeletarFornecedor/>}></Route>
+            
         </Routes>
     )
 }
