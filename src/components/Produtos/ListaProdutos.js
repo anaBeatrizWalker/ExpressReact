@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ListGroup, Button } from 'react-bootstrap'
+import { ListGroup, Button, Col, Row } from 'react-bootstrap'
 import api_express from '../../config/api_express'
 
 export default function ListaProdutos(){
@@ -22,9 +22,12 @@ export default function ListaProdutos(){
 
             {produtos.map(produto => { 
                 return (
-                    <ListGroup style={{marginTop: '20px'}}>
+                    <ListGroup style={{marginTop: '20px', width: '50%'}}>
                         <ListGroup.Item key={produto.id}>
                             <Link to={`/produtos/${produto.id}`}>{produto.nome}</Link>
+                            <div className="d-flex justify-content-end">
+                                <Button href={`/produtos/${produto.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
+                            </div>
                         </ListGroup.Item>
                     </ListGroup>
                 )

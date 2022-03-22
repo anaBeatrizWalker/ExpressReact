@@ -14,6 +14,7 @@ export default function Rotas(){
             <Route path='/produtos' element={<ListaProdutos/>}></Route>
             <Route path='/produtos/:id' element={<DadosProduto/>}></Route>
             <Route path='/produtos/novo' element={<AdicionaProduto/>}></Route>
+            <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>            
             <Route path='/tipos_produtos' element={<TiposProdutos/>}></Route>
             <Route path='/fornecedores' element={<Fornecedores/>}></Route>
             <Route path='/enderecos' element={<Enderecos/>}></Route>

@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
 import api_express from '../../config/api_express'
 
 import { Form, Row, Col, Button } from 'react-bootstrap'
 
 export default function AdicionaProduto(){
+
+    let {id} = useParams()
 
     const [nome, setNome] = useState("")
     const [preco, setPreco] = useState("")
@@ -11,6 +14,20 @@ export default function AdicionaProduto(){
     const [validade, setValidade] = useState("")
     const [tipo_produto_id, setTipoProdutoId] = useState("")
     const [fornecedor_id, setFornecedorId] = useState("")
+
+    useEffect(()=>{
+        if(id){
+            api_express.get(`/produtos/${id}`).then(resp => {
+                const produto = resp.data.produto
+                setNome(produto.nome)
+                setPreco(produto.preco)
+                setQuantidade(produto.quantidade)
+                setValidade(produto.validade)
+                setTipoProdutoId(produto.tipo_produto_id)
+                setFornecedorId(produto.fornecedor_id)
+            })
+        }
+    }, [id])
 
     async function addProduto(){
         const produto = { 
@@ -21,8 +38,11 @@ export default function AdicionaProduto(){
             tipo_produto_id: tipo_produto_id, 
             fornecedor_id: fornecedor_id 
         }
-
-        api_express.post('/produtos', produto).then(resp => { console.log('post', resp.data) })
+        if(id){ 
+            api_express.put(`/produtos/${id}`, { produto }).then(resp => { console.log('put', resp.data) }) 
+        }else{
+            api_express.post('/produtos', { produto }).then(resp => { console.log('post', resp.data) }) 
+        }        
     }
 
     return (
