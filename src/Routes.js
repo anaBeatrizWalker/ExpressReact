@@ -57,6 +57,12 @@ export default function Rotas(){
             <Route path='/enderecos/:id/editar' element={<AdicionaEndereco/>}></Route>
             <Route path='/enderecos/:id/deletar' element={<DeletarEndereco/>}></Route>
 
+            {/* funcionarios */}
+            <Route path='/funcionarios' element={<ListaFuncionarios/>}></Route>
+            <Route path='/funcionarios/:id' element={<DadosFuncionario/>}></Route>
+            <Route path='/funcionarios/novo' element={<AdicionaFuncionario/>}></Route>
+            <Route path='/funcionarios/:id/editar' element={<AdicionaFuncionario/>}></Route>
+            <Route path='/funcionarios/:id/deletar' element={<DeletarFuncionario/>}></Route>
         </Routes>
     )
 }
