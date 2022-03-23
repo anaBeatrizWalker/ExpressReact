@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function AdicionaTipoProduto(){
 
@@ -28,13 +29,13 @@ export default function AdicionaTipoProduto(){
     }
 
     return (
-        <div style={{width: '75%', marginTop: '20px'}}>
+        <div className='form'>
 
             <h1>Cadastre um novo tipo de produto</h1>
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
-                    <Form.Label column sm="2">Nome</Form.Label>
+                    <Form.Label column sm="2">Nome da categoria</Form.Label>
                     <Col sm="10">
                         <Form.Control type="text" name="nome" value={nome} onChange={(e) => setNome(e.target.value)}/>
                     </Col>

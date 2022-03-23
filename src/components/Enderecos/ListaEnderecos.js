@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ListGroup, Button } from 'react-bootstrap'
+import '../estilos.css' 
 
 export default function ListaEnderecos(){
 
@@ -14,7 +15,7 @@ export default function ListaEnderecos(){
     }, [])
 
     return (
-        <div style={{marginTop: '20px'}}>
+        <div className='detalhes'>
 
             <h1>Lista dos endereços dos fornecedores</h1>
 
@@ -22,7 +23,7 @@ export default function ListaEnderecos(){
 
             {enderecos.map(endereco => { 
                 return (
-                    <ListGroup style={{marginTop: '20px', width: '50%'}}>
+                    <ListGroup className='grupo-lista'>
                         <ListGroup.Item key={endereco.id}>
                             <Link to={`/enderecos/${endereco.id}`}>{endereco.logradouro}</Link>
                             <div className="d-flex justify-content-end">

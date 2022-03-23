@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function AdicionaFuncionario(){
 
@@ -39,7 +40,7 @@ export default function AdicionaFuncionario(){
     }
 
     return (
-        <div style={{width: '75%', marginTop: '20px'}}>
+        <div className='form'>
 
             <h1>Cadastre um funcionário</h1>
             

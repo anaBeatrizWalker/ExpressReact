@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function AdicionaEndereco(){
 
@@ -44,7 +45,7 @@ export default function AdicionaEndereco(){
     }
 
     return (
-        <div style={{width: '75%', marginTop: '20px'}}>
+        <div className='form'>
 
             <h1>Cadastre um endereço de um fornecedor</h1>
             
@@ -52,7 +53,12 @@ export default function AdicionaEndereco(){
                 <Form.Group as={Row} className="mb-3" controlId="nome">
                     <Form.Label column sm="2">Código do fornecedor</Form.Label>
                     <Col sm="10">
-                        <Form.Control type="number" name="fornecedor_id" value={fornecedor_id} onChange={(e) => setFornecedorId(e.target.value)}/>
+                    <Form.Select type="number" name="fornecedor_id" value={fornecedor_id} onChange={(e) => setFornecedorId(e.target.value)}>
+                            <option value="" disabled selected hidden>Selecione o código do fornecedor</option>
+                            <option value="1">1 - Fornecedor 1</option>
+                            <option value="2">2 - Fornecedor 2</option>
+                            <option value="10">10 - Fornecedor 3</option>
+                        </Form.Select>
                     </Col>
                 </Form.Group>
 
@@ -79,7 +85,7 @@ export default function AdicionaEndereco(){
 
 
                 <Form.Group as={Row} className="mb-3" controlId="nome">
-                    <Form.Label column sm="2">EStado</Form.Label>
+                    <Form.Label column sm="2">Estado</Form.Label>
                     <Col sm="10">
                         <Form.Control type="text" name="estado" value={estado} onChange={(e) => setEstado(e.target.value)}/>
                     </Col>

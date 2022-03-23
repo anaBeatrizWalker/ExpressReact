@@ -1,7 +1,8 @@
+import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ListGroup, Button, Col, Row } from 'react-bootstrap'
-import api_express from '../../config/api_express'
+import { ListGroup, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function ListaProdutos(){
 
@@ -14,7 +15,7 @@ export default function ListaProdutos(){
     }, [])
 
     return (
-        <div style={{marginTop: '20px'}}>
+        <div className='detalhes'>
 
             <h1>Lista dos produtos</h1>
 
@@ -22,7 +23,7 @@ export default function ListaProdutos(){
 
             {produtos.map(produto => { 
                 return (
-                    <ListGroup style={{marginTop: '20px', width: '50%'}}>
+                    <ListGroup className='grupo-lista'>
                         <ListGroup.Item key={produto.id}>
                             <Link to={`/produtos/${produto.id}`}>{produto.nome}</Link>
                             <div className="d-flex justify-content-end">

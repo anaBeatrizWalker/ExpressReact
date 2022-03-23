@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { ListGroup } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function DadosFuncionario(){
 
@@ -15,11 +16,11 @@ export default function DadosFuncionario(){
     }, [id])
 
     return (
-        <div style={{marginTop: '20px'}}>
+        <div className='detalhes'>
 
             <h1>Detalhes do funcionário</h1>
 
-            <ListGroup style={{marginTop: '20px'}}>
+            <ListGroup className='grupo-lista'>
                 <ListGroup.Item>Código: {funcionario.id}</ListGroup.Item>
                 <ListGroup.Item>Nome: {funcionario.nome}</ListGroup.Item>
                 <ListGroup.Item>Cargo: {funcionario.cargo}</ListGroup.Item>

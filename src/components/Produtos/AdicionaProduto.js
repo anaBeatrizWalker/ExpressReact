@@ -1,8 +1,8 @@
+import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import api_express from '../../config/api_express'
-
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function AdicionaProduto(){
 
@@ -52,7 +52,7 @@ export default function AdicionaProduto(){
     }
 
     return (
-        <div style={{width: '75%', marginTop: '20px'}}>
+        <div className='form'>
 
             <h1>Cadastre um novo produto</h1>
             
@@ -88,14 +88,27 @@ export default function AdicionaProduto(){
                 <Form.Group as={Row} className="mb-3" controlId="tipo_produto_id">
                     <Form.Label column sm="2">ID do Tipo de Produto</Form.Label>
                     <Col sm="10">
-                        <Form.Control type="number" name="tipo_produto_id" value={tipo_produto_id} onChange={(e) => setTipoProdutoId(e.target.value)}/>
+                        <Form.Select type="number" name="tipo_produto_id" value={tipo_produto_id} onChange={(e) => setTipoProdutoId(e.target.value)}>
+                            <option value="" disabled selected hidden>Selecione a categoria do produto</option>
+                            <option value="12">12 - Hortifruti</option>
+                            <option value="13">13 - Açougue</option>
+                            <option value="14">14 - Limpeza</option>
+                            <option value="15">15 - Padaria</option>
+                            <option value="16">16 - Decoração e Casa</option>
+                            <option value="21">21 - Utilitários</option>
+                        </Form.Select>
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="fornecedor_id">
                     <Form.Label column sm="2">ID do Fornecedor</Form.Label>
                     <Col sm="10">
-                        <Form.Control type="number" name="fornecedor_id" value={fornecedor_id} onChange={(e) => setFornecedorId(e.target.value)}/>
+                        <Form.Select type="number" name="fornecedor_id" value={fornecedor_id} onChange={(e) => setFornecedorId(e.target.value)}>
+                            <option value="" disabled selected hidden>Selecione o fornecedor do produto</option>
+                            <option value="1">1 - Fornecedor 1</option>
+                            <option value="2">2 - Fornecedor 2</option>
+                            <option value="10">10 - Fornecedor 3</option>
+                        </Form.Select>
                     </Col>
                 </Form.Group>
 

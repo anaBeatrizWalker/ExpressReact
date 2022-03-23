@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import api_express from '../../config/api_express'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-
 import { ListGroup } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function DadosProduto(){
 
@@ -16,11 +16,11 @@ export default function DadosProduto(){
     }, [id])
 
     return (
-        <div style={{marginTop: '20px'}}>
+        <div className='detalhes'>
 
             <h1>Detalhes do produto</h1>
 
-            <ListGroup style={{marginTop: '20px'}}>
+            <ListGroup className='grupo-lista'>
                 <ListGroup.Item>Código: {produto.id}</ListGroup.Item>
                 <ListGroup.Item>Nome: {produto.nome}</ListGroup.Item>
                 <ListGroup.Item>Preço: {produto.preco}</ListGroup.Item>

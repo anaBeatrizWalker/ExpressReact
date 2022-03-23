@@ -1,7 +1,8 @@
 import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ListGroup, Button, Col, Row } from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
+import '../estilos.css'
 
 export default function ListaFornecedores(){
 
@@ -14,7 +15,7 @@ export default function ListaFornecedores(){
     }, [])
 
     return (
-        <div style={{marginTop: '20px'}}>
+        <div className='detalhes'>
 
             <h1>Lista dos fornecedores</h1>
 
@@ -22,7 +23,7 @@ export default function ListaFornecedores(){
 
             {fornecedores.map(fornecedor => { 
                 return (
-                    <ListGroup style={{marginTop: '20px', width: '50%'}}>
+                    <ListGroup className='grupo-lista'>
                         <ListGroup.Item key={fornecedor.id}>
                             <Link to={`/fornecedores/${fornecedor.id}`}>{fornecedor.nome}</Link>
                             <div className="d-flex justify-content-end">
