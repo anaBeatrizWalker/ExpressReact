@@ -22,7 +22,7 @@ export default function AdicionaProduto(){
                 setNome(produto.nome)
                 setPreco(produto.preco)
                 setQuantidade(produto.quantidade)
-                setValidade(produto.validade)
+                setValidade(formataData(produto.validade))
                 setTipoProdutoId(produto.tipo_produto_id)
                 setFornecedorId(produto.fornecedor_id)
             })
@@ -39,10 +39,16 @@ export default function AdicionaProduto(){
             fornecedor_id: fornecedor_id 
         }
         if(id){ 
-            api_express.put(`/produtos/${id}`, { produto }).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/produtos/${id}`, produto).then(resp => { console.log('put', resp.data) }) 
         }else{
-            api_express.post('/produtos', { produto }).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/produtos', produto).then(resp => { console.log('post', resp.data) }) 
         }        
+    }
+
+    function formataData(validade){
+        let data = new Date(validade);
+        let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear(); 
+        console.log(dataFormatada);
     }
 
     return (

@@ -20,9 +20,9 @@ export default function AdicionaFornecedor(){
     async function addFornecedor(){
         const fornecedor = { nome: nome }
         if(id){ 
-            api_express.put(`/fornecedores/${id}`, { fornecedor }).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/fornecedores/${id}`, fornecedor).then(resp => { console.log('put', resp.data) }) 
         }else{
-            api_express.post('/fornecedores', { fornecedor }).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/fornecedores', fornecedor).then(resp => { console.log('post', resp.data) }) 
         }        
     }
 

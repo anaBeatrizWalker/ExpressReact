@@ -21,10 +21,10 @@ export default function AdicionaTipoProduto(){
     async function addTipoProduto(){
         const tipo_produto = { nome: nome }
         if(id){ 
-            api_express.put(`/tipos_produtos/${id}`, { tipo_produto }).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/tipos_produtos/${id}`, tipo_produto).then(resp => { console.log('put', resp.data) }) 
         }else{
-            api_express.post('/tipos_produtos', { tipo_produto }).then(resp => { console.log('post', resp.data) }) 
-        }        
+            api_express.post('/tipos_produtos', tipo_produto).then(resp => { console.log('post', resp.data) }) 
+        }         
     }
 
     return (
@@ -41,7 +41,7 @@ export default function AdicionaTipoProduto(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button href="/tipos_produtos" className="btn btn-success" onClick={() => addTipoProduto()}>
+                    <Button href="/tipos_produtos"  className="btn btn-success" onClick={() => addTipoProduto()}>
                         Salvar
                     </Button>
                 </Form.Group>

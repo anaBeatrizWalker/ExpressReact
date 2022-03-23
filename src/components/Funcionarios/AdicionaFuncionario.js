@@ -32,9 +32,9 @@ export default function AdicionaFuncionario(){
             email: email
         }
         if(id){ 
-            api_express.put(`/funcionarios/${id}`, { funcionario }).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/funcionarios/${id}`, funcionario).then(resp => { console.log('put', resp.data) }) 
         }else{
-            api_express.post('/funcionarios', { funcionario }).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/funcionarios', funcionario).then(resp => { console.log('post', resp.data) }) 
         }        
     }
 

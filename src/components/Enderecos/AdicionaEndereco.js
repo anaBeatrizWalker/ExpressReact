@@ -37,9 +37,9 @@ export default function AdicionaEndereco(){
             cep: cep 
         }
         if(id){ 
-            api_express.put(`/enderecos/${id}`, { endereco }).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/enderecos/${id}`, endereco).then(resp => { console.log('put', resp.data) }) 
         }else{
-            api_express.post('/enderecos', { endereco }).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/enderecos', endereco).then(resp => { console.log('post', resp.data) }) 
         }        
     }
 
