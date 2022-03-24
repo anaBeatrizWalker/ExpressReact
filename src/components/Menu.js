@@ -1,10 +1,10 @@
 import React from "react"
 import { Nav } from 'react-bootstrap'
+import './estilos.css'
 
-//Nav
-export default function Navegation(){
+export default function Menu(){
     return (
-        <div style={{ marginTop: '20px' }}>
+        <div className="detalhes">
             <Nav fill variant="tabs" defaultActiveKey="/">
                 <Nav.Item>
                     <Nav.Link href="/produtos">Produtos</Nav.Link>

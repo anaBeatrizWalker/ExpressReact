@@ -1,13 +1,12 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-
-import Nav from './components/Nav'
-import Rotas from './Routes'
+import Menu from './components/Menu'
+import Rotas from './Rotas'
 
 export default props => {
   return (
     <BrowserRouter>
-        <Nav/>
+        <Menu/>
         <Rotas/>
     </BrowserRouter>
   )
