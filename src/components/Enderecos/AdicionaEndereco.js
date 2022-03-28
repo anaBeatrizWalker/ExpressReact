@@ -2,6 +2,7 @@ import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
+import Select from "react-select"
 import '../estilos.css'
 
 export default function AdicionaEndereco(){
@@ -13,8 +14,13 @@ export default function AdicionaEndereco(){
     const [cidade, setCidade] = useState("")
     const [estado, setEstado] = useState("")
     const [cep, setCep] = useState("")
+    const [fornecedores, setFornecedores] = useState({})
 
     useEffect(()=>{
+        api_express.get('/fornecedores').then(resp => {
+            setFornecedores(resp.data.fornecedores)
+        })
+
         if(id){
             api_express.get(`/enderecos/${id}`).then(resp => {
                 const endereco = resp.data.endereco
@@ -28,9 +34,19 @@ export default function AdicionaEndereco(){
         }
     }, [id])
 
+    useEffect(() => {
+        function formataDados(){
+            for(let i = 0; i < fornecedores.length; i++){
+                fornecedores[i].value = fornecedores[i].id
+                fornecedores[i].label = fornecedores[i].nome
+            }
+        }
+        formataDados()
+    }, [fornecedores])
+
     async function addEndereco(){
         const endereco = { 
-            fornecedor_id: fornecedor_id,
+            fornecedor_id: fornecedor_id.id,
             logradouro: logradouro,
             complemento: complemento,
             cidade: cidade,
@@ -53,12 +69,12 @@ export default function AdicionaEndereco(){
                 <Form.Group as={Row} className="mb-3" controlId="nome">
                     <Form.Label column sm="2">Código do fornecedor</Form.Label>
                     <Col sm="10">
-                    <Form.Select type="number" name="fornecedor_id" value={fornecedor_id} onChange={(e) => setFornecedorId(e.target.value)}>
-                            <option value="" disabled selected hidden>Selecione o código do fornecedor</option>
-                            <option value="1">1 - Fornecedor 1</option>
-                            <option value="2">2 - Fornecedor 2</option>
-                            <option value="10">10 - Fornecedor 3</option>
-                        </Form.Select>
+                        <Select 
+                            type="number" name="fornecedor_id"
+                            placeholder={"Selecione o fornecedor"} 
+                            onChange={(e) => setFornecedorId(e)}
+                            options={fornecedores}>
+                        </Select>
                     </Col>
                 </Form.Group>
 
