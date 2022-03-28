@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import Select from "react-select"
 import '../estilos.css'
+const moment = require('moment')
 
 export default function AdicionaProduto(){
 
@@ -18,53 +19,49 @@ export default function AdicionaProduto(){
     const [fornecedor_id, setFornecedorId] = useState([])
     const [fornecedores, setFornecedores] = useState({})
 
-    useEffect(()=>{
-        if(id){
-            api_express.get(`/produtos/${id}`).then(resp => {
-                const produto = resp.data.produto
-                console.log(produto)
-                setNome(produto.nome)
-                setPreco(produto.preco)
-                setQuantidade(produto.quantidade)
-                setValidade(formataData(produto.validade))
-                setTipoProdutoId(produto.tipo_produto_id)
-                //setTipoProdutos(RESGATA NOME)
-                setFornecedorId(produto.fornecedor_id)
-                //setFornecedores(RESGATA NOME)
-            })
-        }
-        api_express.get('/tipos_produtos').then(resp => {
-            setTipoProdutos(resp.data.tipos_produto)
-        })
-        api_express.get('/fornecedores').then(resp => {
-            setFornecedores(resp.data.fornecedores)
-        })
-    }, [])
-
     useEffect(() => {
         function formataDados(){
             for(let i = 0; i < tipos_produto.length; i++){
                 tipos_produto[i].value = tipos_produto[i].id
-                tipos_produto[i].label = tipos_produto[i].nome                
+                tipos_produto[i].label = tipos_produto[i].nome         
             }
-
             for(let i = 0; i < fornecedores.length; i++){
                 fornecedores[i].value = fornecedores[i].id
                 fornecedores[i].label = fornecedores[i].nome
             }
         }
         formataDados()
-        
     }, [tipos_produto, fornecedores])
+
+    useEffect(()=>{
+        api_express.get('/tipos_produtos').then(resp => {
+            setTipoProdutos(resp.data.tipos_produto)
+        })
+        api_express.get('/fornecedores').then(resp => {
+            setFornecedores(resp.data.fornecedores)
+        })
+        
+        if(id){
+            api_express.get(`/produtos/${id}`).then(resp => {
+                const produto = resp.data.produto
+                setNome(produto.nome)
+                setPreco(produto.preco)
+                setQuantidade(produto.quantidade)
+                setValidade(formataData(produto.validade))
+                
+            })
+        }
+
+    }, [])
 
     async function addProduto(){
         const produto = { 
-                nome: nome, 
-                preco: preco, 
-                quantidade: quantidade, 
-                validade: validade, 
-                tipo_produto_id: tipo_produto_id.id,
-                fornecedor_id: fornecedor_id.id
+            nome: nome,
+            preco: preco,
+            quantidade: quantidade,
+            validade: validade,
+            tipo_produto_id: tipo_produto_id.id,
+            fornecedor_id: fornecedor_id.id
         }        
         if(id){ 
             api_express.put(`/produtos/${id}`, produto).then(resp => { console.log('put', resp.data) }) 
@@ -73,10 +70,9 @@ export default function AdicionaProduto(){
         }        
     }
 
-    function formataData(validade){
-        let data = new Date(validade)
-        let dataFormatada = data.getFullYear() + "-" + ((data.getMonth() + 1)) + "-" + ((data.getDate() ))
-        return dataFormatada
+    function formataData(dataInput) {
+        let data_formata = moment(dataInput).format('YYYY-MM-DD')
+        return data_formata
     }
 
     return (
@@ -118,7 +114,7 @@ export default function AdicionaProduto(){
                     <Col sm="10">
                         <Select 
                             type="number" name="tipo_produto_id"
-                            placeholder={"Selecione uma categoria"} 
+                            placeholder={"Selecione a categoria"} 
                             onChange={(e) => setTipoProdutoId(e)}
                             options={tipos_produto}>
                         </Select>
@@ -129,8 +125,8 @@ export default function AdicionaProduto(){
                     <Form.Label column sm="2">ID do Fornecedor</Form.Label>
                     <Col sm="10">
                         <Select 
-                            type="number" name="fornecedor_id" 
-                            placeholder={"Selecione um fornecedor"} 
+                            type="number" name="fornecedor_id"
+                            placeholder={"Selecione o fornecedor"} 
                             onChange={(e) => setFornecedorId(e)}
                             options={fornecedores}>
                         </Select>
