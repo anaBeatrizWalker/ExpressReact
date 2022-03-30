@@ -15,9 +15,13 @@ export default function AdicionaProduto(){
     const [quantidade, setQuantidade] = useState("")
     const [validade, setValidade] = useState("")
     const [tipo_produto_id, setTipoProdutoId] = useState([])
-    const [tipos_produto, setTipoProdutos] = useState({})
     const [fornecedor_id, setFornecedorId] = useState([])
+    
+    const [tipos_produto, setTipoProdutos] = useState({})
     const [fornecedores, setFornecedores] = useState({})
+
+    const [nomeTipoProduto, setNomeTipoProduto] = useState()
+    const [nomeFornecedor, setNomeFornecedor] = useState()
 
     useEffect(() => {
         function formataDados(){
@@ -40,19 +44,34 @@ export default function AdicionaProduto(){
         api_express.get('/fornecedores').then(resp => {
             setFornecedores(resp.data.fornecedores)
         })
-        
         if(id){
             api_express.get(`/produtos/${id}`).then(resp => {
                 const produto = resp.data.produto
+                console.log(produto)
+
+                function formataGetSelect(){
+                    for(let i = 0; i < tipos_produto.length; i++){
+                        if(tipos_produto[i].id === produto.tipo_produto_id){
+                            setNomeTipoProduto(tipos_produto[i].nome)
+                            console.log(nomeTipoProduto)
+                        }
+                    }    
+                    for(let i = 0; i < fornecedores.length; i++){
+                        if(fornecedores[i].id === produto.fornecedor_id){
+                            setNomeFornecedor(fornecedores[i].nome)   
+                            console.log(nomeFornecedor)
+                        }
+                    } 
+                }
+                formataGetSelect()
+  
                 setNome(produto.nome)
-                setPreco(produto.preco)
+                setPreco(produto.preco) 
                 setQuantidade(produto.quantidade)
                 setValidade(formataData(produto.validade))
-                
             })
         }
-
-    }, [])
+    }, [nomeTipoProduto, nomeFornecedor])
 
     async function addProduto(){
         const produto = { 
@@ -78,7 +97,7 @@ export default function AdicionaProduto(){
     return (
         <div className='form'>
 
-            <h1>Cadastre um novo produto</h1>
+            {id ? <h1>Atualize os dados do produto</h1> : <h1>Cadastre um novo produto</h1>}
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
@@ -110,26 +129,43 @@ export default function AdicionaProduto(){
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="tipo_produto_id">
-                    <Form.Label column sm="2">ID do Tipo de Produto</Form.Label>
+                    <Form.Label column sm="2">Tipo de Produto</Form.Label>
                     <Col sm="10">
-                        <Select 
-                            type="number" name="tipo_produto_id"
-                            placeholder={"Selecione a categoria"} 
-                            onChange={(e) => setTipoProdutoId(e)}
-                            options={tipos_produto}>
-                        </Select>
+                        {id ?
+                                <Select 
+                                    name="tipo_produto_id"
+                                    defaultValue={{ label: `${nomeTipoProduto}` }} //undefined
+                                    onChange={(e) => setTipoProdutoId(e)}
+                                    options={tipos_produto}>
+                                </Select>
+                        :   <Select 
+                                name="tipo_produto_id"
+                                placeholder={"Selecione a categoria"} 
+                                onChange={(e) => setTipoProdutoId(e)}
+                                options={tipos_produto}>
+                            </Select>
+                        }
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="fornecedor_id">
-                    <Form.Label column sm="2">ID do Fornecedor</Form.Label>
+                    <Form.Label column sm="2">Fornecedor</Form.Label>
                     <Col sm="10">
-                        <Select 
-                            type="number" name="fornecedor_id"
-                            placeholder={"Selecione o fornecedor"} 
-                            onChange={(e) => setFornecedorId(e)}
-                            options={fornecedores}>
-                        </Select>
+                        {id ?
+                                <Select 
+                                    name="fornecedor_id"
+                                    //placeholder={nomeFornecedor}
+                                    defaultValue={{ label: `${nomeFornecedor}` }} //undefined
+                                    onChange={(e) => setTipoProdutoId(e)}
+                                    options={fornecedores}>
+                                </Select> 
+                        :   <Select 
+                                name="fornecedor_id"
+                                placeholder={"Selecione o fornecedor"} 
+                                onChange={(e) => setFornecedorId(e)}
+                                options={fornecedores}>
+                            </Select>
+                        }
                     </Col>
                 </Form.Group>
 
