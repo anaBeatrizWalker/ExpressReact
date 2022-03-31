@@ -20,11 +20,11 @@ export default function AdicionaProduto(){
     const [tipos_produto, setTipoProdutos] = useState({})
     const [fornecedores, setFornecedores] = useState({})
 
-    const [nomeTipoProduto, setNomeTipoProduto] = useState()
-    const [nomeFornecedor, setNomeFornecedor] = useState()
+    const [nomeTipoProduto, setNomeTipoProduto] = useState("")
+    const [nomeFornecedor, setNomeFornecedor] = useState("")
 
     useEffect(() => {
-        function formataDados(){
+        async function formataDados(){
             for(let i = 0; i < tipos_produto.length; i++){
                 tipos_produto[i].value = tipos_produto[i].id
                 tipos_produto[i].label = tipos_produto[i].nome         
@@ -32,6 +32,23 @@ export default function AdicionaProduto(){
             for(let i = 0; i < fornecedores.length; i++){
                 fornecedores[i].value = fornecedores[i].id
                 fornecedores[i].label = fornecedores[i].nome
+            }
+            if(id){
+                api_express.get(`/produtos/${id}`).then(resp => {
+                    const produto = resp.data.produto
+                    for(let i = 0; i < tipos_produto.length; i++){
+                        if(tipos_produto[i].id === produto.tipo_produto_id){
+                            setNomeTipoProduto(tipos_produto[i].nome)
+                            console.log(nomeTipoProduto)
+                        }
+                    }
+                    for(let i = 0; i < fornecedores.length; i++){
+                        if(fornecedores[i].id === produto.fornecedor_id){
+                            setNomeFornecedor(fornecedores[i].nome)   
+                            console.log(nomeFornecedor)
+                        }
+                    }
+                })
             }
         }
         formataDados()
@@ -43,35 +60,17 @@ export default function AdicionaProduto(){
         })
         api_express.get('/fornecedores').then(resp => {
             setFornecedores(resp.data.fornecedores)
-        })
+        }) 
         if(id){
             api_express.get(`/produtos/${id}`).then(resp => {
                 const produto = resp.data.produto
-                console.log(produto)
-
-                function formataGetSelect(){
-                    for(let i = 0; i < tipos_produto.length; i++){
-                        if(tipos_produto[i].id === produto.tipo_produto_id){
-                            setNomeTipoProduto(tipos_produto[i].nome)
-                            console.log(nomeTipoProduto)
-                        }
-                    }    
-                    for(let i = 0; i < fornecedores.length; i++){
-                        if(fornecedores[i].id === produto.fornecedor_id){
-                            setNomeFornecedor(fornecedores[i].nome)   
-                            console.log(nomeFornecedor)
-                        }
-                    } 
-                }
-                formataGetSelect()
-  
                 setNome(produto.nome)
                 setPreco(produto.preco) 
                 setQuantidade(produto.quantidade)
                 setValidade(formataData(produto.validade))
             })
         }
-    }, [nomeTipoProduto, nomeFornecedor])
+    }, [])
 
     async function addProduto(){
         const produto = { 
@@ -134,7 +133,8 @@ export default function AdicionaProduto(){
                         {id ?
                                 <Select 
                                     name="tipo_produto_id"
-                                    defaultValue={{ label: `${nomeTipoProduto}` }} //undefined
+                                    //placeholder={nomeTipoProduto}
+                                    defaultValue={{ label: nomeTipoProduto }} //undefined
                                     onChange={(e) => setTipoProdutoId(e)}
                                     options={tipos_produto}>
                                 </Select>
@@ -155,7 +155,7 @@ export default function AdicionaProduto(){
                                 <Select 
                                     name="fornecedor_id"
                                     //placeholder={nomeFornecedor}
-                                    defaultValue={{ label: `${nomeFornecedor}` }} //undefined
+                                    defaultValue={{ label: nomeFornecedor }} //undefined
                                     onChange={(e) => setTipoProdutoId(e)}
                                     options={fornecedores}>
                                 </Select> 
