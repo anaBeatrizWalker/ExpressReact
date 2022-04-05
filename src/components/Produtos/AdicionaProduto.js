@@ -1,6 +1,6 @@
 import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import Select from "react-select"
 import '../estilos.css'
@@ -9,6 +9,7 @@ const moment = require('moment')
 export default function AdicionaProduto(){
 
     let {id} = useParams()
+    let navigate = useNavigate()
 
     const [nome, setNome] = useState("")
     const [preco, setPreco] = useState("")
@@ -23,43 +24,15 @@ export default function AdicionaProduto(){
     const [nomeTipoProduto, setNomeTipoProduto] = useState("")
     const [nomeFornecedor, setNomeFornecedor] = useState("")
 
-    useEffect(() => {
-        async function formataDados(){
-            for(let i = 0; i < tipos_produto.length; i++){
-                tipos_produto[i].value = tipos_produto[i].id
-                tipos_produto[i].label = tipos_produto[i].nome         
-            }
-            for(let i = 0; i < fornecedores.length; i++){
-                fornecedores[i].value = fornecedores[i].id
-                fornecedores[i].label = fornecedores[i].nome
-            }
-            if(id){
-                api_express.get(`/produtos/${id}`).then(resp => {
-                    const produto = resp.data.produto
-                    for(let i = 0; i < tipos_produto.length; i++){
-                        if(tipos_produto[i].id === produto.tipo_produto_id){
-                            setNomeTipoProduto(tipos_produto[i].nome)
-                            console.log(nomeTipoProduto)
-                        }
-                    }
-                    for(let i = 0; i < fornecedores.length; i++){
-                        if(fornecedores[i].id === produto.fornecedor_id){
-                            setNomeFornecedor(fornecedores[i].nome)   
-                            console.log(nomeFornecedor)
-                        }
-                    }
-                })
-            }
-        }
-        formataDados()
-    }, [tipos_produto, fornecedores])
-
     useEffect(()=>{
         api_express.get('/tipos_produtos').then(resp => {
-            setTipoProdutos(resp.data.tipos_produto)
+            let tiposProdutos = resp.data.tipos_produto
+            setTipoProdutos(tiposProdutos)
         })
+
         api_express.get('/fornecedores').then(resp => {
-            setFornecedores(resp.data.fornecedores)
+            let fornec = resp.data.fornecedores
+            setFornecedores(fornec)
         }) 
         if(id){
             api_express.get(`/produtos/${id}`).then(resp => {
@@ -68,9 +41,38 @@ export default function AdicionaProduto(){
                 setPreco(produto.preco) 
                 setQuantidade(produto.quantidade)
                 setValidade(formataData(produto.validade))
+                setTipoProdutoId(produto.tipo_produto_id)
+                setFornecedorId(produto.fornecedor_id)
             })
         }
-    }, [])
+    }, [id])
+
+    useEffect(() => {
+        for(let i = 0; i < tipos_produto.length; i++){
+            tipos_produto[i].value = tipos_produto[i].id
+            tipos_produto[i].label = tipos_produto[i].nome
+        }
+        for(let i = 0; i < fornecedores.length; i++){
+            fornecedores[i].value = fornecedores[i].id
+            fornecedores[i].label = fornecedores[i].nome
+        }
+        if(id){
+            api_express.get(`/produtos/${id}`).then(resp => {
+                const produto = resp.data.produto
+
+                for(let i in tipos_produto){
+                    if(tipos_produto[i].id === produto.tipo_produto_id){
+                        setNomeTipoProduto(tipos_produto[i].nome)
+                    }
+                }
+                for(let i in fornecedores){
+                    if(fornecedores[i].id === produto.fornecedor_id){
+                        setNomeFornecedor(fornecedores[i].nome)   
+                    }
+                }
+            })
+        }
+    }, [id, tipos_produto, fornecedores, nomeTipoProduto, nomeFornecedor])
 
     async function addProduto(){
         const produto = { 
@@ -78,13 +80,23 @@ export default function AdicionaProduto(){
             preco: preco,
             quantidade: quantidade,
             validade: validade,
-            tipo_produto_id: tipo_produto_id.id,
-            fornecedor_id: fornecedor_id.id
-        }        
+            tipo_produto_id: validarIdTipo(tipo_produto_id.id),
+            fornecedor_id: validarIdFornecedor(fornecedor_id.id) 
+        }
         if(id){ 
-            api_express.put(`/produtos/${id}`, produto).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/produtos/${id}`, produto).then(resp => {
+                console.log('put', resp.data)
+                navigate('/produtos')
+            }).catch((erro) => {
+                console.log(erro)
+            })
         }else{
-            api_express.post('/produtos', produto).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/produtos', produto).then(resp => { 
+                console.log('post', resp.data)
+                navigate('/produtos')
+            }).catch((erro) => {
+                console.log(erro)
+            })
         }        
     }
 
@@ -93,10 +105,30 @@ export default function AdicionaProduto(){
         return data_formata
     }
 
+    function validarIdTipo(id){
+        if(id){
+            return id
+        }else{
+            document.querySelector(".tipo_produto_id").classList.add('sinalizacao_erro')
+            alert("Atualize ou selecione o campo Tipo de Produto")
+            return false  
+        }
+    }
+
+    function validarIdFornecedor(id){
+        if(id){
+            return id
+        }else{
+            document.querySelector(".fornecedor_id").classList.add('sinalizacao_erro')
+            alert("Atualize ou selecione o campo Fornecedor")
+            return false  
+        } 
+    }
+
     return (
         <div className='form'>
 
-            {id ? <h1>Atualize os dados do produto</h1> : <h1>Cadastre um novo produto</h1>}
+            {id ? <h1>Atualizar dados do produto</h1> : <h1>Cadastre um novo produto</h1>}
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
@@ -130,47 +162,29 @@ export default function AdicionaProduto(){
                 <Form.Group as={Row} className="mb-3" controlId="tipo_produto_id">
                     <Form.Label column sm="2">Tipo de Produto</Form.Label>
                     <Col sm="10">
-                        {id ?
-                                <Select 
-                                    name="tipo_produto_id"
-                                    //placeholder={nomeTipoProduto}
-                                    defaultValue={{ label: nomeTipoProduto }} //undefined
-                                    onChange={(e) => setTipoProdutoId(e)}
-                                    options={tipos_produto}>
-                                </Select>
-                        :   <Select 
-                                name="tipo_produto_id"
-                                placeholder={"Selecione a categoria"} 
-                                onChange={(e) => setTipoProdutoId(e)}
-                                options={tipos_produto}>
-                            </Select>
-                        }
+                        <Select
+                            className="tipo_produto_id" 
+                            placeholder={id ? `${nomeTipoProduto}` : "Selecione a categoria"}
+                            onChange={(e) => setTipoProdutoId(e)}
+                            options={tipos_produto}>
+                        </Select>
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="fornecedor_id">
                     <Form.Label column sm="2">Fornecedor</Form.Label>
                     <Col sm="10">
-                        {id ?
-                                <Select 
-                                    name="fornecedor_id"
-                                    //placeholder={nomeFornecedor}
-                                    defaultValue={{ label: nomeFornecedor }} //undefined
-                                    onChange={(e) => setTipoProdutoId(e)}
-                                    options={fornecedores}>
-                                </Select> 
-                        :   <Select 
-                                name="fornecedor_id"
-                                placeholder={"Selecione o fornecedor"} 
-                                onChange={(e) => setFornecedorId(e)}
-                                options={fornecedores}>
-                            </Select>
-                        }
+                        <Select 
+                            className="fornecedor_id"
+                            placeholder={id ? `${nomeFornecedor}` : "Selecione a categoria"}
+                            onChange={(e) => setFornecedorId(e)}
+                            options={fornecedores}>
+                        </Select>
                     </Col>
                 </Form.Group>
 
                 <Form.Group>
-                    <Button href="/produtos" className="btn btn-success" onClick={() => addProduto()}>
+                    <Button className="btn btn-success" onClick={() => addProduto()}>
                         Salvar
                     </Button>
                 </Form.Group>
