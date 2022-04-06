@@ -43,8 +43,6 @@ export default function AdicionaProduto(){
                 setPreco(produto.preco) 
                 setQuantidade(produto.quantidade)
                 setValidade(formataData(produto.validade))
-                setTipoProdutoId(produto.tipo_produto_id)
-                setFornecedorId(produto.fornecedor_id)
             })
         }
     }, [id])
@@ -82,8 +80,8 @@ export default function AdicionaProduto(){
             preco: preco,
             quantidade: quantidade,
             validade: validade,
-            tipo_produto_id: validarIdTipo(tipo_produto_id.id),
-            fornecedor_id: validarIdFornecedor(fornecedor_id.id) 
+            tipo_produto_id: tipo_produto_id.id,
+            fornecedor_id: fornecedor_id.id
         }
         if(!validarCampos()) return
         const saveDataForm = true
@@ -120,8 +118,8 @@ export default function AdicionaProduto(){
         if(!preco) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo preço!'})
         if(!quantidade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo quantidade!'})
         if(!validade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo validade!'})
-        if(!tipo_produto_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo do produto!'})
-        if(!fornecedor_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo fornecedor!'})
+        if(!tipo_produto_id.id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo do produto!'})
+        if(!fornecedor_id.id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo fornecedor!'})
     
         return true
     }
@@ -129,26 +127,6 @@ export default function AdicionaProduto(){
     function formataData(dataInput) {
         let data_formata = moment(dataInput).format('YYYY-MM-DD')
         return data_formata
-    }
-
-    function validarIdTipo(id){
-        if(id){
-            return id
-        }else{
-            document.querySelector(".tipo_produto_id").classList.add('sinalizacao_erro')
-            alert("Atualize ou selecione o campo Tipo de Produto")
-            return false  
-        }
-    }
-
-    function validarIdFornecedor(id){
-        if(id){
-            return id
-        }else{
-            document.querySelector(".fornecedor_id").classList.add('sinalizacao_erro')
-            alert("Atualize ou selecione o campo Fornecedor")
-            return false  
-        } 
     }
 
     return (
