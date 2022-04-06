@@ -24,6 +24,8 @@ export default function AdicionaProduto(){
     const [nomeTipoProduto, setNomeTipoProduto] = useState("")
     const [nomeFornecedor, setNomeFornecedor] = useState("")
 
+    const [status, setStatus] = useState({ type: '', mensagem: '' })
+
     useEffect(()=>{
         api_express.get('/tipos_produtos').then(resp => {
             let tiposProdutos = resp.data.tipos_produto
@@ -83,6 +85,20 @@ export default function AdicionaProduto(){
             tipo_produto_id: validarIdTipo(tipo_produto_id.id),
             fornecedor_id: validarIdFornecedor(fornecedor_id.id) 
         }
+        if(!validarCampos()) return
+        const saveDataForm = true
+        if (saveDataForm) {
+          setStatus({
+            type: 'success',
+            mensagem: "Usuário cadastrado com sucesso!"
+          })
+        } else {
+          setStatus({
+            type: 'error',
+            mensagem: "Erro: Usuário não cadastrado com sucesso!"
+          })
+        }
+
         if(id){ 
             api_express.put(`/produtos/${id}`, produto).then(resp => {
                 console.log('put', resp.data)
@@ -98,6 +114,16 @@ export default function AdicionaProduto(){
                 console.log(erro)
             })
         }        
+    }
+    function validarCampos(){
+        if(!nome) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo nome!'})
+        if(!preco) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo preço!'})
+        if(!quantidade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo quantidade!'})
+        if(!validade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo validade!'})
+        if(!tipo_produto_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo do produto!'})
+        if(!fornecedor_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo fornecedor!'})
+    
+        return true
     }
 
     function formataData(dataInput) {
@@ -129,6 +155,9 @@ export default function AdicionaProduto(){
         <div className='form'>
 
             {id ? <h1>Atualizar dados do produto</h1> : <h1>Cadastre um novo produto</h1>}
+
+            {status.type === 'success' ? <p style={{ color: "green" }}>{status.mensagem}</p> : ""}
+            {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
