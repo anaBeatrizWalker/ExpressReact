@@ -138,6 +138,30 @@ export default function AdicionaProduto(){
             {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
             
             <Form>
+                <Form.Group as={Row} className="mb-3" controlId="tipo_produto_id">
+                    <Form.Label column sm="2">Tipo de Produto</Form.Label>
+                    <Col sm="10">
+                        <Select
+                            className="tipo_produto_id" 
+                            placeholder={id ? `${nomeTipoProduto}` : "Selecione a categoria"}
+                            onChange={(e) => setTipoProdutoId(e)}
+                            options={tipos_produto}>
+                        </Select>
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="fornecedor_id">
+                    <Form.Label column sm="2">Fornecedor</Form.Label>
+                    <Col sm="10">
+                        <Select 
+                            className="fornecedor_id"
+                            placeholder={id ? `${nomeFornecedor}` : "Selecione a categoria"}
+                            onChange={(e) => setFornecedorId(e)}
+                            options={fornecedores}>
+                        </Select>
+                    </Col>
+                </Form.Group>
+
                 <Form.Group as={Row} className="mb-3" controlId="nome">
                     <Form.Label column sm="2">Nome</Form.Label>
                     <Col sm="10">
@@ -163,30 +187,6 @@ export default function AdicionaProduto(){
                     <Form.Label column sm="2">Validade</Form.Label>
                     <Col sm="10">
                         <Form.Control type="date" name="validade" value={validade} onChange={(e) => setValidade(e.target.value)}/>
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-3" controlId="tipo_produto_id">
-                    <Form.Label column sm="2">Tipo de Produto</Form.Label>
-                    <Col sm="10">
-                        <Select
-                            className="tipo_produto_id" 
-                            placeholder={id ? `${nomeTipoProduto}` : "Selecione a categoria"}
-                            onChange={(e) => setTipoProdutoId(e)}
-                            options={tipos_produto}>
-                        </Select>
-                    </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-3" controlId="fornecedor_id">
-                    <Form.Label column sm="2">Fornecedor</Form.Label>
-                    <Col sm="10">
-                        <Select 
-                            className="fornecedor_id"
-                            placeholder={id ? `${nomeFornecedor}` : "Selecione a categoria"}
-                            onChange={(e) => setFornecedorId(e)}
-                            options={fornecedores}>
-                        </Select>
                     </Col>
                 </Form.Group>
 

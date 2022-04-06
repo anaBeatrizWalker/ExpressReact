@@ -100,7 +100,6 @@ export default function AdicionaEndereco(){
     function validarCampos(){
         if(!fornecedor_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Fornecedor!'})
         if(!logradouro) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Logradouro!'})
-        if(!complemento) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Complemento!'})
         if(!cidade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Cidade!'})
         if(!estado) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo do Estado!'})
         if(!cep) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo CEP!'})

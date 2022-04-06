@@ -30,7 +30,7 @@ export default function Rotas(){
     return (
         <Routes>
             {/* rotas dos produtos */}
-            <Route path='/produtos' element={<ListaProdutos/>}></Route>
+            <Route path='/' element={<ListaProdutos/>}></Route>
             <Route path='/produtos/:id' element={<DadosProduto/>}></Route>
             <Route path='/produtos/novo' element={<AdicionaProduto/>}></Route>
             <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>   
