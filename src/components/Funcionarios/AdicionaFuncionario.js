@@ -1,17 +1,20 @@
 import api_express from '../../config/api_express'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useNavigate } from 'react-router'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import '../estilos.css'
 
 export default function AdicionaFuncionario(){
 
     let {id} = useParams()
+    let navigate = useNavigate()
 
     const [nome, setNome] = useState("")
     const [cargo, setCargo] = useState("")
     const [telefone, setTelefone] = useState("")
     const [email, setEmail] = useState("")
+
+    const [status, setStatus] = useState({ type: '', mensagem: '' })
 
     useEffect(()=>{
         if(id){
@@ -32,17 +35,54 @@ export default function AdicionaFuncionario(){
             telefone: telefone,
             email: email
         }
+
+        if(!validarCampos()) return
+        const saveDataForm = true
+        if (saveDataForm) {
+          setStatus({
+            type: 'success',
+            mensagem: "Usuário cadastrado com sucesso!"
+          })
+        } else {
+          setStatus({
+            type: 'error',
+            mensagem: "Erro: Usuário não cadastrado com sucesso!"
+          })
+        }
+
         if(id){ 
-            api_express.put(`/funcionarios/${id}`, funcionario).then(resp => { console.log('put', resp.data) }) 
+            api_express.put(`/funcionarios/${id}`, funcionario).then(resp => {
+                console.log('put', resp.data)
+                navigate('/funcionarios')
+            }).catch((erro) => {
+                console.log(erro)
+            })
         }else{
-            api_express.post('/funcionarios', funcionario).then(resp => { console.log('post', resp.data) }) 
+            api_express.post('/funcionarios', funcionario).then(resp => {
+                console.log('post', resp.data)
+                navigate('/funcionarios')
+            }).catch((erro) => {
+                console.log(erro)
+            })
         }        
+    }
+
+    function validarCampos(){
+        if(!nome) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Nome!'})
+        if(!cargo) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Cargo!'})
+        if(!telefone) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Telefone!'})
+        if(!email) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo E-mail!'})
+    
+        return true
     }
 
     return (
         <div className='form'>
 
-            <h1>Cadastre um funcionário</h1>
+            {id ? <h1>Atualizar funcionário</h1> : <h1>Cadastre um funcionário</h1>}
+
+            {status.type === 'success' ? <p style={{ color: "green" }}>{status.mensagem}</p> : ""}
+            {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
@@ -74,7 +114,7 @@ export default function AdicionaFuncionario(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button href="/funcionarios" className="btn btn-success" onClick={() => addFuncionario()}>
+                    <Button className="btn btn-success" onClick={() => addFuncionario()}>
                         Salvar
                     </Button>
                 </Form.Group>

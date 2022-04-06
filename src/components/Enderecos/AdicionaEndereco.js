@@ -20,6 +20,8 @@ export default function AdicionaEndereco(){
 
     const [nomeFornecedor, setNomeFornecedor] = useState("")
 
+    const [status, setStatus] = useState({ type: '', mensagem: '' })
+
     useEffect(()=>{
         api_express.get('/fornecedores').then(resp => {
             setFornecedores(resp.data.fornecedores)
@@ -27,7 +29,6 @@ export default function AdicionaEndereco(){
         if(id){
             api_express.get(`/enderecos/${id}`).then(resp => {
                 const endereco = resp.data.endereco
-                setFornecedorId(endereco.fornecedor_id)
                 setLogradouro(endereco.logradouro)
                 setComplemento(endereco.complemento)
                 setCidade(endereco.cidade)
@@ -57,13 +58,28 @@ export default function AdicionaEndereco(){
 
     async function addEndereco(){
         const endereco = { 
-            fornecedor_id: validarIdFornecedor(fornecedor_id.id),
+            fornecedor_id: fornecedor_id.id,
             logradouro: logradouro,
             complemento: complemento,
             cidade: cidade,
             estado: estado,
             cep: cep 
         }
+        console.log(endereco)
+        if(!validarCampos()) return
+        const saveDataForm = true
+        if (saveDataForm) {
+          setStatus({
+            type: 'success',
+            mensagem: "Usuário cadastrado com sucesso!"
+          })
+        } else {
+          setStatus({
+            type: 'error',
+            mensagem: "Erro: Usuário não cadastrado com sucesso!"
+          })
+        }
+
         if(id){ 
             api_express.put(`/enderecos/${id}`, endereco).then(resp => {
                 console.log('put', resp.data)
@@ -73,7 +89,7 @@ export default function AdicionaEndereco(){
             })
         }else{
             api_express.post('/enderecos', endereco).then(resp => {
-                console.log('put', resp.data)
+                console.log('post', resp.data)
                 navigate('/enderecos')
             }).catch((erro) => {
                 console.log(erro)
@@ -81,20 +97,24 @@ export default function AdicionaEndereco(){
         }        
     }
 
-    function validarIdFornecedor(id){
-        if(id){
-            return id
-        }else{
-            document.querySelector(".fornecedor_id").classList.add('sinalizacao_erro')
-            alert("Atualize ou selecione o campo Fornecedor")
-            return false  
-        } 
+    function validarCampos(){
+        if(!fornecedor_id) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Fornecedor!'})
+        if(!logradouro) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Logradouro!'})
+        if(!complemento) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Complemento!'})
+        if(!cidade) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo Cidade!'})
+        if(!estado) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo tipo do Estado!'})
+        if(!cep) return setStatus({type: 'error', mensagem: 'Erro: Necessário preencher o campo CEP!'})
+    
+        return true
     }
 
     return (
         <div className='form'>
 
             {id ? <h1>Atualizar endereço</h1> : <h1>Cadastre um endereço de um fornecedor</h1>}
+
+            {status.type === 'success' ? <p style={{ color: "green" }}>{status.mensagem}</p> : ""}
+            {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
             
             <Form>
                 <Form.Group as={Row} className="mb-3" controlId="nome">
