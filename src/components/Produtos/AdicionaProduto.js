@@ -100,14 +100,14 @@ export default function AdicionaProduto(){
         if(id){ 
             api_express.put(`/produtos/${id}`, produto).then(resp => {
                 console.log('put', resp.data)
-                navigate('/produtos')
+                navigate('/')
             }).catch((erro) => {
                 console.log(erro)
             })
         }else{
             api_express.post('/produtos', produto).then(resp => { 
                 console.log('post', resp.data)
-                navigate('/produtos')
+                navigate('/')
             }).catch((erro) => {
                 console.log(erro)
             })
@@ -132,7 +132,7 @@ export default function AdicionaProduto(){
     return (
         <div className='form'>
 
-            {id ? <h1>Atualizar dados do produto</h1> : <h1>Cadastre um novo produto</h1>}
+            {id ? <h1>Atualizar produto</h1> : <h1>Cadastre um novo produto</h1>}
 
             {status.type === 'success' ? <p style={{ color: "green" }}>{status.mensagem}</p> : ""}
             {status.type === 'error' ? <p style={{ color: "#ff0000" }}>{status.mensagem}</p> : ""}
@@ -191,9 +191,12 @@ export default function AdicionaProduto(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button className="btn btn-success" onClick={() => addProduto()}>
-                        Salvar
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button className="p-2 bd-highlight btn-success buttons" onClick={() => addProduto()}>
+                            Salvar
+                        </Button>
+                    </div>
+                    
                 </Form.Group>
             </Form>
         </div>

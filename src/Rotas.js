@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router'
+import './components/estilos.css'
 
 import ListaProdutos from './components/Produtos/ListaProdutos'
 import DadosProduto from './components/Produtos/DadosProduto'
@@ -28,41 +29,43 @@ import DeletarFuncionario from './components/Funcionarios/DeletarFuncionario'
 
 export default function Rotas(){
     return (
-        <Routes>
-            {/* rotas dos produtos */}
-            <Route path='/' element={<ListaProdutos/>}></Route>
-            <Route path='/produtos/:id' element={<DadosProduto/>}></Route>
-            <Route path='/produtos/novo' element={<AdicionaProduto/>}></Route>
-            <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>   
-            <Route path='/produtos/:id/deletar' element={<DeletarProduto/>}></Route>
+        <div className='container'>
+            <Routes className='box'>
+                {/* rotas dos produtos */}
+                <Route path='/' element={<ListaProdutos/>}></Route>
+                <Route path='/produtos/:id' element={<DadosProduto/>}></Route>
+                <Route path='/produtos/novo' element={<AdicionaProduto/>}></Route>
+                <Route path='/produtos/:id/editar' element={<AdicionaProduto/>}></Route>   
+                <Route path='/produtos/:id/deletar' element={<DeletarProduto/>}></Route>
 
-            {/* tipos dos produtos */}
-            <Route path='/tipos_produtos' element={<ListarTiposProdutos/>}></Route>
-            <Route path='/tipos_produtos/:id' element={<DadosTipoProduto/>}></Route>
-            <Route path='/tipos_produtos/novo' element={<AdicionaTipoProduto/>}></Route>
-            <Route path='/tipos_produtos/:id/editar' element={<AdicionaTipoProduto/>}></Route>
-            <Route path='/tipos_produtos/:id/deletar' element={<DeletarTipoProduto/>}></Route>
+                {/* tipos dos produtos */}
+                <Route path='/tipos_produtos' element={<ListarTiposProdutos/>}></Route>
+                <Route path='/tipos_produtos/:id' element={<DadosTipoProduto/>}></Route>
+                <Route path='/tipos_produtos/novo' element={<AdicionaTipoProduto/>}></Route>
+                <Route path='/tipos_produtos/:id/editar' element={<AdicionaTipoProduto/>}></Route>
+                <Route path='/tipos_produtos/:id/deletar' element={<DeletarTipoProduto/>}></Route>
 
-            {/* fornecedores */}
-            <Route path='/fornecedores' element={<ListaFornecedores/>}></Route>
-            <Route path='/fornecedores/:id' element={<DadosFornecedor/>}></Route>
-            <Route path='/fornecedores/novo' element={<AdicionaFornecedor/>}></Route>
-            <Route path='/fornecedores/:id/editar' element={<AdicionaFornecedor/>}></Route>
-            <Route path='/fornecedores/:id/deletar' element={<DeletarFornecedor/>}></Route>
+                {/* fornecedores */}
+                <Route path='/fornecedores' element={<ListaFornecedores/>}></Route>
+                <Route path='/fornecedores/:id' element={<DadosFornecedor/>}></Route>
+                <Route path='/fornecedores/novo' element={<AdicionaFornecedor/>}></Route>
+                <Route path='/fornecedores/:id/editar' element={<AdicionaFornecedor/>}></Route>
+                <Route path='/fornecedores/:id/deletar' element={<DeletarFornecedor/>}></Route>
 
-            {/* endereços */}
-            <Route path='/enderecos' element={<ListaEnderecos/>}></Route>
-            <Route path='/enderecos/:id' element={<DadosEndereco/>}></Route>
-            <Route path='/enderecos/novo' element={<AdicionaEndereco/>}></Route>
-            <Route path='/enderecos/:id/editar' element={<AdicionaEndereco/>}></Route>
-            <Route path='/enderecos/:id/deletar' element={<DeletarEndereco/>}></Route>
+                {/* endereços */}
+                <Route path='/enderecos' element={<ListaEnderecos/>}></Route>
+                <Route path='/enderecos/:id' element={<DadosEndereco/>}></Route>
+                <Route path='/enderecos/novo' element={<AdicionaEndereco/>}></Route>
+                <Route path='/enderecos/:id/editar' element={<AdicionaEndereco/>}></Route>
+                <Route path='/enderecos/:id/deletar' element={<DeletarEndereco/>}></Route>
 
-            {/* funcionarios */}
-            <Route path='/funcionarios' element={<ListaFuncionarios/>}></Route>
-            <Route path='/funcionarios/:id' element={<DadosFuncionario/>}></Route>
-            <Route path='/funcionarios/novo' element={<AdicionaFuncionario/>}></Route>
-            <Route path='/funcionarios/:id/editar' element={<AdicionaFuncionario/>}></Route>
-            <Route path='/funcionarios/:id/deletar' element={<DeletarFuncionario/>}></Route>
-        </Routes>
+                {/* funcionarios */}
+                <Route path='/funcionarios' element={<ListaFuncionarios/>}></Route>
+                <Route path='/funcionarios/:id' element={<DadosFuncionario/>}></Route>
+                <Route path='/funcionarios/novo' element={<AdicionaFuncionario/>}></Route>
+                <Route path='/funcionarios/:id/editar' element={<AdicionaFuncionario/>}></Route>
+                <Route path='/funcionarios/:id/deletar' element={<DeletarFuncionario/>}></Route>
+            </Routes>
+        </div>
     )
 }

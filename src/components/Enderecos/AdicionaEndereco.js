@@ -166,9 +166,11 @@ export default function AdicionaEndereco(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button className="btn btn-success" onClick={() => addEndereco()}>
-                        Salvar
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button className="p-2 bd-highlight btn-success buttons" onClick={() => addEndereco()}>
+                            Salvar
+                        </Button>
+                    </div>
                 </Form.Group>
             </Form>
         </div>

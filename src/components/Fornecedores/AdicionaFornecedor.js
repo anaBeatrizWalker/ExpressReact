@@ -79,9 +79,11 @@ export default function AdicionaFornecedor(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button className="btn btn-success" onClick={() => addFornecedor()}>
-                        Salvar
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button className="p-2 bd-highlight btn-success buttons" onClick={() => addFornecedor()}>
+                            Salvar
+                        </Button>
+                    </div>
                 </Form.Group>
             </Form>
         </div>

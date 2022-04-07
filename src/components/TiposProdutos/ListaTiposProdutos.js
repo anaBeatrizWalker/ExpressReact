@@ -19,16 +19,16 @@ export default function ListaTiposProdutos(){
 
             <h1>Lista dos tipos de produtos</h1>
 
-            <Link className='btn btn-primary' to="/tipos_produtos/novo">Adicionar tipo</Link>
+            <Link className='btn btn-success' to="/tipos_produtos/novo">Adicionar tipo</Link>
 
             {tipos_produtos.map(tipo_produto => { 
                 return (
-                    <ListGroup className='grupo-lista'>
+                    <ListGroup className='margin-top'>
                         <ListGroup.Item key={tipo_produto.id}>
                             <Link to={`/tipos_produtos/${tipo_produto.id}`}>{tipo_produto.nome}</Link>
                             <div className="d-flex justify-content-end">
-                                <Button href={`/tipos_produtos/${tipo_produto.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
-                                <Button href={`/tipos_produtos/${tipo_produto.id}/deletar`} variant="danger" className="p-2 bd-highlight">Deletar</Button>
+                                <Button href={`/tipos_produtos/${tipo_produto.id}/editar`} variant="warning" className="p-2 bd-highlight buttons">Editar</Button>
+                                <Button href={`/tipos_produtos/${tipo_produto.id}/deletar`} variant="danger" className="p-2 bd-highlight buttons">Deletar</Button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>

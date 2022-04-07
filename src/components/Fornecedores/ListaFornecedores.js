@@ -19,16 +19,16 @@ export default function ListaFornecedores(){
 
             <h1>Lista dos fornecedores</h1>
 
-            <Link className='btn btn-primary' to="/fornecedores/novo">Adicionar fornecedor</Link>
+            <Link className='btn btn-success' to="/fornecedores/novo">Adicionar fornecedor</Link>
 
             {fornecedores.map(fornecedor => { 
                 return (
-                    <ListGroup className='grupo-lista'>
+                    <ListGroup className='margin-top'>
                         <ListGroup.Item key={fornecedor.id}>
                             <Link to={`/fornecedores/${fornecedor.id}`}>{fornecedor.nome}</Link>
                             <div className="d-flex justify-content-end">
-                                <Button href={`/fornecedores/${fornecedor.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
-                                <Button href={`/fornecedores/${fornecedor.id}/deletar`} variant="danger" className="p-2 bd-highlight">Deletar</Button>
+                                <Button href={`/fornecedores/${fornecedor.id}/editar`} variant="warning" className="p-2 bd-highlight buttons">Editar</Button>
+                                <Button href={`/fornecedores/${fornecedor.id}/deletar`} variant="danger" className="p-2 bd-highlight buttons">Deletar</Button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>

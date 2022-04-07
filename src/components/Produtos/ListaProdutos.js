@@ -19,16 +19,16 @@ export default function ListaProdutos(){
 
             <h1>Lista dos produtos</h1>
 
-            <Link className='btn btn-primary' to="/produtos/novo">Adicionar produto</Link>
+            <Link className='btn btn-success' to="/produtos/novo">Adicionar produto</Link>
 
             {produtos.map(produto => { 
                 return (
-                    <ListGroup className='grupo-lista'>
+                    <ListGroup className='margin-top'>
                         <ListGroup.Item key={produto.id}>
                             <Link to={`/produtos/${produto.id}`}>{produto.nome}</Link>
                             <div className="d-flex justify-content-end">
-                                <Button href={`/produtos/${produto.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
-                                <Button href={`/produtos/${produto.id}/deletar`} variant="danger" className="p-2 bd-highlight">Deletar</Button>
+                                <Button href={`/produtos/${produto.id}/editar`} variant="warning" className="p-2 bd-highlight buttons">Editar</Button>
+                                <Button href={`/produtos/${produto.id}/deletar`} variant="danger" className="p-2 bd-highlight buttons">Deletar</Button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>

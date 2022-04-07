@@ -4,10 +4,10 @@ import './estilos.css'
 
 export default function Menu(){
     return (
-        <div className="detalhes">
-            <Nav fill variant="tabs" defaultActiveKey="/">
+        <div className="margin-top">
+            <Nav className="justify-content-center" activeKey="/">
                 <Nav.Item>
-                    <Nav.Link href="/produtos">Produtos</Nav.Link>
+                    <Nav.Link href="/">Produtos</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href="/tipos_produtos">Tipos de Produtos</Nav.Link>

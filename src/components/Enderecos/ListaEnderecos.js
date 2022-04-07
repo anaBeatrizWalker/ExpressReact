@@ -17,18 +17,18 @@ export default function ListaEnderecos(){
     return (
         <div className='detalhes'>
 
-            <h1>Lista dos endereços dos fornecedores</h1>
+            <h1>Lista de todos os endereços</h1>
 
-            <Link className='btn btn-primary' to="/enderecos/novo">Adicionar um endereço</Link>
+            <Link className='btn btn-success' to="/enderecos/novo">Adicionar um endereço</Link>
 
             {enderecos.map(endereco => { 
                 return (
-                    <ListGroup className='grupo-lista'>
+                    <ListGroup className='margin-top'>
                         <ListGroup.Item key={endereco.id}>
                             <Link to={`/enderecos/${endereco.id}`}>{endereco.logradouro}</Link>
                             <div className="d-flex justify-content-end">
-                                <Button href={`/enderecos/${endereco.id}/editar`} variant="warning" className="p-2 bd-highlight">Editar</Button>
-                                <Button href={`/enderecos/${endereco.id}/deletar`} variant="danger" className="p-2 bd-highlight">Deletar</Button>
+                                <Button href={`/enderecos/${endereco.id}/editar`} variant="warning" className="p-2 bd-highlight buttons">Editar</Button>
+                                <Button href={`/enderecos/${endereco.id}/deletar`} variant="danger" className="p-2 bd-highlight buttons">Deletar</Button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>

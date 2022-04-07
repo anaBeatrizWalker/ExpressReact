@@ -10,7 +10,7 @@ export default function DeletarProduto(){
     useEffect(()=>{
         api_express.delete(`/produtos/${id}`).then(resp => {
             alert(`Produto ${id} deletado com sucesso.`)
-            navigate('/produtos')
+            navigate('/')
         })
     }, [])
 

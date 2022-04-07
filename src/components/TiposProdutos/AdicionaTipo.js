@@ -79,9 +79,11 @@ export default function AdicionaTipoProduto(){
                 </Form.Group>
 
                 <Form.Group>
-                    <Button className="btn btn-success" onClick={() => addTipoProduto()}>
-                        Salvar
-                    </Button>
+                    <div className="d-flex justify-content-end">
+                        <Button className="p-2 bd-highlight btn-success buttons" onClick={() => addTipoProduto()}>
+                            Salvar
+                        </Button>
+                    </div>
                 </Form.Group>
             </Form>
         </div>
